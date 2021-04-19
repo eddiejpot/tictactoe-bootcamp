@@ -39,15 +39,15 @@ const buildBoard = (arrBoard) => {
   }
 };
 
-// helper function that takes in and array and removes repeated values
+// helper function that takes in an array and removes repeated values
 const filterValues = (arr) => {
   // e.g. if the array is ['X','X','O'], it will return ['X','O']
   // e.g. if the array is ['X','X','X'], it will return ['X']
   let checkPlayer = arr.filter((item, index) => arr.indexOf(item) === index);
   if (checkPlayer.length === 1 && checkPlayer[0] === PLAYER_ONE) {
-    playerOneWin = true;
+    winner = PLAYER_ONE;
   } else if (checkPlayer.length === 1 && checkPlayer[0] === PLAYER_TWO) {
-    playerTwoWin = true;
+    winner = PLAYER_TWO;
   }
 };
 
@@ -60,7 +60,7 @@ const resetGame = () => {
 
 // check horizontal
 const checkHorizontal = (arr) => {
-  for (c = 0; c < arr.length; c += 1) {
+  for (let c = 0; c < arr.length; c += 1) {
     //column loop
     let rowNum = c;
     let rowArray = arr[c];
@@ -77,7 +77,7 @@ const checkVertical = (arr) => {
   //  ['g', 'h', 'i'],]
   // returns
   // [['a', 'd', 'g'],['b', 'e', 'h'],['c', 'f', 'i']]
-  for (i = 0; i < arr.length; i += 1) {
+  for (let i = 0; i < arr.length; i += 1) {
     // on the first loop
     //  verticalArray = ['a', 'd', 'g']
     let verticalArray = arr.map((value) => value[i]);
@@ -101,19 +101,41 @@ const checkDiagonal = (arr) => {
     //  ['g', 'h', 'i'],]
     // returns
     // [['c', 'b', 'a'],['f', 'e', 'd'], ['i', 'h', 'g']]
-    .map((value) => value.reverse())
+    .map((value) => value.slice().reverse())
     .map((value, index) => value[index]);
   filterValues(flipArray);
 };
 
-const checkWinner = () => {
-  checkHorizontal(board);
-  checkVertical(board);
-  checkDiagonal(board);
-  if (playerOneWin === true) {
-    console.log('PLAYER ONE WINS');
-  } else if (playerTwoWin === true) {
-    console.log('PLAYER TWO WINS');
+// check if board is completely filled up
+const checkBoard = (arr) => {
+  // flatten all arrays
+  const mergedArr = [].concat.apply([], arr);
+  if (mergedArr.includes('')) {
+    return false;
+  } else {
+    return true;
   }
-  resetGame();
+};
+
+const checkWinner = (arrBoard) => {
+  // check if board is completely filled up
+  // if it isn't, end game
+  if (checkBoard(arrBoard)) {
+    //end game
+    console.log('FINISHED ALL BOARDS');
+    console.log('GAME ENDED');
+  } else {
+    // if it isn't, continue game until someone wins
+    checkHorizontal(arrBoard);
+    checkVertical(arrBoard);
+    checkDiagonal(arrBoard);
+    if (winner === PLAYER_ONE) {
+      console.log('PLAYER ONE WINS');
+      console.log('GAME ENDED');
+    } else if (winner === PLAYER_TWO) {
+      console.log('PLAYER TWO WINS');
+      console.log('GAME ENDED');
+    }
+    resetGame();
+  }
 };

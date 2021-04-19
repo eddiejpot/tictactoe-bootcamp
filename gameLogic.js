@@ -22,11 +22,9 @@ const squareClick = (column, row) => {
     // refresh the screen with a new board
     // according to the array that was just changed
     buildBoard(board);
-    console.log(board);
 
     // check if win
-    checkWinner();
-    console.log(board);
+    checkWinner(board);
 
     // change the player
     togglePlayer();

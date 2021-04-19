@@ -18,5 +18,4 @@ let boardContainer;
 const PLAYER_ONE = 'X';
 const PLAYER_TWO = 'O';
 let currentPlayer = PLAYER_ONE;
-let playerOneWin = false;
-let playerTwoWin = false;
+let winner;

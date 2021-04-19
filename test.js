@@ -4,7 +4,7 @@ let playerOneWin = false;
 let playerTwoWin = false;
 
 const board = [
-  ['X', 'O', 'X'],
+  ['X', 'X', 'X'],
   ['O', 'X', 'O'],
   ['O', 'X', 'O'],
 ];
